@@ -1,9 +1,11 @@
+require('dotenv').config();
 const express = require('express')
 const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
 const app = express()
+app.use(express.static('public'));
 
-mongoose.connect('mongodb://localhost/urlShortener', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true, useUnifiedTopology: true
 })
 
@@ -29,6 +31,11 @@ app.get('/:shortUrl', async (req, res) => {
   shortUrl.save()
 
   res.redirect(shortUrl.full)
+})
+
+app.post('/delete/:id', async (req, res) => {
+  await ShortUrl.findByIdAndDelete(req.params.id)
+  res.redirect('/')
 })
 
 app.listen(process.env.PORT || 5000);
