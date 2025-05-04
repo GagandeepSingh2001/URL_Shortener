@@ -38,4 +38,14 @@ app.post('/delete/:id', async (req, res) => {
   res.redirect('/')
 })
 
+app.post('/delete-all', async (req, res) => {
+  try {
+    await ShortUrl.deleteMany({});
+    res.redirect('/');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error deleting all items');
+  }
+});
+
 app.listen(process.env.PORT || 5000);

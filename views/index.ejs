@@ -132,6 +132,21 @@
       color: white;
     }
 
+    #deleteall{
+      background-color: transparent;
+      cursor: pointer;
+      color: white;
+      font-size: clamp(0.8rem, 2vw, 1rem);
+      border-radius: 20px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid white;
+
+      &:hover{
+        background-color: #3b4ccc;
+      }
+    }
+
     #info{
       color: white;
       font-weight: bold;
@@ -185,9 +200,12 @@
             </form>
             </td>
           </tr>
-        <% }) %>
-      </tbody>
-    </table>
+          <% }) %>
+        </tbody>
+      </table>
+      <form action="/delete-all" method="POST" onsubmit="return confirm('Are you sure you want to empty the table ?');">
+        <button id="deleteall" type="submit" class="d-none">Delete All <i class="fa-solid fa-trash"></i></button>
+      </form>
     </center>
   </div>
 
@@ -200,9 +218,11 @@
       const table = document.querySelector('table');
       const heading = document.getElementById('act');
       const info = document.getElementById('info');
+      const deleteall = document.getElementById('deleteall');
       if (table && table.rows.length > 1) {
         table.classList.remove('d-none');
         heading.classList.remove('d-none');
+        deleteall.classList.remove('d-none');
         info.classList.add('d-none');
       }
     });
